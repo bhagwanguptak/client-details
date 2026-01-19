@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { S3Client, GetObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
@@ -79,7 +80,7 @@ export async function GET(
       ResponseContentDisposition: `attachment; filename="${encodeURIComponent(document.fileName)}"`,
     });
 
-    const url = await getSignedUrl(s3Client, command, { expiresIn: 60 });
+    const url = await getSignedUrl(s3Client, command, { expiresIn: 300 });
 
     return NextResponse.redirect(url);
   } catch (error: any) {
