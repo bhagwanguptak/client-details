@@ -38,6 +38,7 @@ export async function DELETE(
       await s3Client.send(new DeleteObjectCommand({
         Bucket: process.env.S3_BUCKET_NAME,
         Key: document.fileUrl,
+        ResponseContentDisposition: `attachment; filename="${document.fileName}"`,
       }));
     } catch (s3Error) {
       console.error("Storage Deletion Failed:", s3Error);
