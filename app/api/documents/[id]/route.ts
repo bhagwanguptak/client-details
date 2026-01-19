@@ -76,6 +76,7 @@ export async function GET(
     const command = new GetObjectCommand({
       Bucket: process.env.S3_BUCKET_NAME,
       Key: document.fileUrl,
+      ResponseContentDisposition: `attachment; filename="${encodeURIComponent(document.fileName)}"`,
     });
 
     const url = await getSignedUrl(s3Client, command, { expiresIn: 60 });
