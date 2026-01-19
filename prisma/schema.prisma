@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  phone     String?
+  phoneHash String
+  role      Role
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  client Client?
+}
+
+model Service {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  subServices SubService[]
+  clients     ClientService[]
+}
+
+model SubService {
+  id        String   @id @default(uuid())
+  name      String
+  serviceId String
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  service   Service         @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  clients   ClientService[]
+  documents Document[]
+}
+
+model Client {
+  id           String   @id @default(uuid())
+  userId       String   @unique
+  name         String
+  organization String
+  createdAt    DateTime @default(now())
+
+  user      User            @relation(fields: [userId], references: [id])
+  documents Document[]
+  services  ClientService[]
+}
+
+model Document {
+  id           String   @id @default(uuid())
+  clientId     String
+  subServiceId String
+  fileName     String
+  fileUrl      String
+  createdAt    DateTime @default(now())
+
+  client     Client     @relation(fields: [clientId], references: [id])
+  subService SubService @relation(fields: [subServiceId], references: [id])
+}
+
+model ClientService {
+  id String @id @default(uuid())
+
+  clientId     String
+  serviceId    String
+  subServiceId String?
+
+  createdAt DateTime @default(now())
+
+  client     Client      @relation(fields: [clientId], references: [id])
+  service    Service     @relation(fields: [serviceId], references: [id])
+  subService SubService? @relation(fields: [subServiceId], references: [id])
+
+  @@unique([clientId, serviceId, subServiceId])
+}
+
+enum Role {
+  ADMIN
+  CLIENT
+}
