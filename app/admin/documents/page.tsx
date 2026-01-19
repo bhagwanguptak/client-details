@@ -159,8 +159,7 @@ export default async function AdminDocumentsPage() {
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center justify-end gap-2">
                        <a 
-                          href={`/api/documents/${doc.id}/view`}
-                          target="_blank"
+                          href={`/api/documents/${doc.id}`} target="_blank" rel="noopener noreferrer"
                           download 
                           className="p-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 rounded-lg hover:bg-blue-600 hover:text-white transition-all shadow-sm"
                         >

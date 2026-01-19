@@ -143,8 +143,7 @@ export default async function ClientDetailPage({
                           <FileText className="w-5 h-5" />
                         </div>
                         <a 
-                          href={`/api/documents/${doc.id}/view`} 
-                          target="_blank"
+                          href={`/api/documents/${doc.id}`} target="_blank" rel="noopener noreferrer"
                           download 
                           className="p-2 text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                           title="Download File"
