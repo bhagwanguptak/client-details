@@ -174,7 +174,7 @@ export default async function ClientDashboardPage() {
                                 </p>
                               </div>
                               <a
-                                href={`/api/documents/${doc.id}/view`} 
+                                href={"/api/documents/"+doc.id} 
                                 target="_blank"
                                 download
                                 className="shrink-0 p-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-xl hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all shadow-sm"
